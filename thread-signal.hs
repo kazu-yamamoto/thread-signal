@@ -13,7 +13,7 @@ main = do
     getUserEntryForName "nobody" >>= setUserID . userID
     setHandler sigUSR1 $ Catch $ c_drop_except_bind
     sendSignalToAllNativeThreads
-    threadDelay 10000000
+    threadDelay 1000000000
 
 setHandler :: Signal -> Handler -> IO ()
 setHandler sig func = void $ installHandler sig func Nothing
