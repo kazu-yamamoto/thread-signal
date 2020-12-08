@@ -23,6 +23,7 @@ sendSignalToAllNativeThreads = do
     pid <- getProcessID
     strtids <- listDirectory ("/proc/" ++ show pid ++ "/task")
     let tids = map read strtids :: [Int]
+    print tids
     mapM_ sendSig tids
 
 sendSig :: Int -> IO ()
