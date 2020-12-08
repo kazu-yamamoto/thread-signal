@@ -10,20 +10,20 @@
 #include <sys/syscall.h>
 #include <unistd.h>
 
-void debug () {
-  printf("%d, %d\n", getpid(), syscall(SYS_gettid));
+void debug (char *label) {
+  printf("%s: %d, %d\n", label, getpid(), syscall(SYS_gettid));
 }
 
 void keep_capabilities () {
-  // debug ();
+  debug("keep_capabilities");
   int r = prctl(PR_SET_SECUREBITS, SECBIT_KEEP_CAPS, 0L, 0L, 0L);
   if (r < 0) {
-    printf("keep_capabilities %d\n", errno);
+    printf("keep_capabilities: ERROR %d\n", errno);
   }
 }
 
 void drop_except_bind () {
-  // debug ();
+  debug("drop_except_bind");
   cap_user_header_t header = malloc(sizeof(*header));
   header->version = _LINUX_CAPABILITY_VERSION_3;
   header->pid = 0;
@@ -41,16 +41,17 @@ void drop_except_bind () {
   free(data);
 
   if (r < 0) {
-    printf("drop_except_bind %d\n", errno);
+    printf("drop_except_bind: ERROR %d\n", errno);
   }
 }
 
 void send_signal (int tid, int sig) {
+  printf("send_signal: %d\n", tid);
   int tgid = getpid();
   int r = syscall(SYS_tgkill, tgid, tid, sig);
 
   if (r < 0) {
-    printf("send_signald %d\n", errno);
+    printf("send_signald: ERROR %d\n", errno);
   }
 }
 
