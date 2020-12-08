@@ -1,0 +1,20 @@
+Name:                   thread-signal
+Version:                0.0.0
+Author:                 Kazu Yamamoto <kazu@iij.ad.jp>
+Maintainer:             Kazu Yamamoto <kazu@iij.ad.jp>
+License:                BSD3
+License-File:           LICENSE
+Synopsis:               sendings signal to native threads
+Description:            sendings signal to native threads on Linux
+Cabal-Version:          >= 1.10
+Build-Type:             Simple
+
+Executable thread-signal
+  Default-Language:     Haskell2010
+  Main-Is:              thread-signal.hs
+  GHC-Options:          -Wall -threaded -rtsopts
+  Build-Depends:        base >= 4.0 && < 5
+                      , directory
+                      , filepath
+                      , unix
+  c-sources: cbits/setcap.c
