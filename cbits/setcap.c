@@ -12,7 +12,7 @@
 #include <unistd.h>
 
 void debug (char *label) {
-  printf("%s: %d, %d\n", label, getpid(), syscall(SYS_gettid));
+  printf("%s: received signal in tid=%d\n", label, syscall(SYS_gettid));
 }
 
 void keep_capabilities () {
@@ -47,7 +47,7 @@ void drop_except_bind () {
 }
 
 void send_signal (int tid, int sig) {
-  printf("send_signal: %d\n", tid);
+  printf("send signal to tid=%d\n", tid);
   int tgid = getpid();
   int r = syscall(SYS_tgkill, tgid, tid, sig);
 
