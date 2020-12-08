@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/capability.h>
 #include <sys/errno.h>
 #include <sys/prctl.h>
@@ -18,7 +19,7 @@ void keep_capabilities () {
   debug("keep_capabilities");
   int r = prctl(PR_SET_SECUREBITS, SECBIT_KEEP_CAPS, 0L, 0L, 0L);
   if (r < 0) {
-    printf("keep_capabilities: ERROR %d\n", errno);
+    printf("keep_capabilities: %s\n", strerror(errno));
   }
 }
 
@@ -41,7 +42,7 @@ void drop_except_bind () {
   free(data);
 
   if (r < 0) {
-    printf("drop_except_bind: ERROR %d\n", errno);
+    printf("drop_except_bind: %s\n", strerror(errno));
   }
 }
 
@@ -51,7 +52,7 @@ void send_signal (int tid, int sig) {
   int r = syscall(SYS_tgkill, tgid, tid, sig);
 
   if (r < 0) {
-    printf("send_signald: ERROR %d\n", errno);
+    printf("send_signald: %d\n", strerror(errno));
   }
 }
 
