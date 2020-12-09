@@ -11,6 +11,8 @@
 #include <sys/syscall.h>
 #include <unistd.h>
 
+#include "Rts.h"
+
 void debug (char *label) {
   printf("%s: received signal in tid=%d\n", label, syscall(SYS_gettid));
 }
