@@ -8,8 +8,6 @@ import System.Posix
 
 main :: IO ()
 main = do
-    setHandler sigUSR1 $ Catch $ c_keep_capabilities
-    sendSignalToAllNativeThreads
     getUserEntryForName "nobody" >>= setUserID . userID
     setHandler sigUSR1 $ Catch $ c_drop_except_bind
     sendSignalToAllNativeThreads
@@ -30,9 +28,6 @@ sendSig :: Int -> IO ()
 sendSig tid = do
     c_send_signal (fromIntegral tid) sigUSR1
     threadDelay 10000
-
-foreign import ccall unsafe "keep_capabilities"
-  c_keep_capabilities :: IO ()
 
 foreign import ccall unsafe "drop_except_bind"
   c_drop_except_bind :: IO ()
