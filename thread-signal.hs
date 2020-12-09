@@ -39,4 +39,3 @@ foreign import ccall unsafe "drop_except_bind"
 
 foreign import ccall unsafe "send_signal"
   c_send_signal :: CInt -> CInt -> IO ()
-

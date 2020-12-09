@@ -15,7 +15,7 @@ void debug (char *label) {
   printf("%s: received signal in tid=%d\n", label, syscall(SYS_gettid));
 }
 
-void keep_capabilities () {
+void FlagDefaultsHook(void) () {
   debug("keep_capabilities");
   int r = prctl(PR_SET_SECUREBITS, SECBIT_KEEP_CAPS, 0L, 0L, 0L);
   if (r < 0) {
@@ -23,7 +23,7 @@ void keep_capabilities () {
   }
 }
 
-void drop_except_bind () {
+void drop_except_bind (void) {
   debug("drop_except_bind");
   cap_user_header_t header = malloc(sizeof(*header));
   header->version = _LINUX_CAPABILITY_VERSION_3;
@@ -57,9 +57,7 @@ void send_signal (int tid, int sig) {
 }
 
 #else
-void keep_capabilities () {
-}
-void drop_except_bind () {
+void drop_except_bind (void) {
 }
 void send_signal (int tid, int sig) {
 }
