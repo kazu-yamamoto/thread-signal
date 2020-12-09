@@ -17,7 +17,7 @@ void debug (char *label) {
   printf("%s: received signal in tid=%d\n", label, syscall(SYS_gettid));
 }
 
-void FlagDefaultsHook(void) () {
+void FlagDefaultsHook (void) {
   debug("keep_capabilities");
   int r = prctl(PR_SET_SECUREBITS, SECBIT_KEEP_CAPS, 0L, 0L, 0L);
   if (r < 0) {
